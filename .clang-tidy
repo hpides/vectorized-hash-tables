@@ -1,0 +1,138 @@
+# Copied from Darwin (https://github.com/hpides/darwin/blob/master/.clang-tidy)
+
+Checks: '*,-altera-*,-bugprone-easily-swappable-parameters,-modernize-return-braced-init-list,-altera-unroll-loops,-altera-struct-pack-align,-cppcoreguidelines-c-copy-assignment-signature,-misc-unconventional-assign-operator,-cppcoreguidelines-macro-usage,-modernize-loop-convert,-cert-env33-c,-misc-no-recursion,-clang-diagnostic-dollar-in-identifier-extension,-cppcoreguidelines-pro-type-static-cast-downcast,-hicpp-use-auto,-modernize-use-auto,-llvm-header-guard,-fuchsia-overloaded-operator,-llvmlibc-*,-*-default-arguments*,-google-build-using-namespace,-cppcoreguidelines-pro-type-reinterpret-cast,-readability-misleading-indentation,-llvm-include-order,-*-uppercase-literal-suffix,-cert-dcl16-c,-*-magic-numbers,-*-non-private-member-variables-in-classes,-modernize-use-trailing-return-type,-modernize-use-nodiscard,-cppcoreguidelines-init-variables,-concurrency-mt-unsafe,-cppcoreguidelines-pro-bounds-pointer-arithmetic'
+
+WarningsAsErrors: '*'
+
+# Explanation of disabled checks:
+#  altera-*                                            These are all super annoying, not sure why we would want these at all. See examples below.
+#  bugprone-easily-swappable-parameters                This is just annoying
+#  modernize-return-braced-init-list                   I prefer that the type is explicitly used if it is not trivial
+#  altera-unroll-loops                                 This suggested unrolling nearly every loop, which is annoying
+#  altera-struct-pack-align                            The suggestions for general struct alignment are not relevant.
+#  cppcoreguidelines-c-copy-assignment-signature       We 'abuse' a few assignment operators for our code generation
+#  misc-unconventional-assign-operator                  (same)
+#  cppcoreguidelines-macro-usage                       We have a few custom macros, such as FAIL / ASSERT
+#  modernize-loop-convert                              Sometime we int-based loops to avoid auto loops types
+#  cert-env33-c                                        We ned the `system` call to compile the generated code
+#  misc-no-recursion                                   We need recursion to traverse the Node tree
+#  cppcoreguidelines-pro-type-static-cast-downcast     We do allow static downcasts for performance reasons
+#  hicpp-use-auto                                      Explicit types are always better :)
+#  modernize-use-auto                                   (same)
+#  llvm-header-guard                                   We want to allow #pragma once
+#  fuchsia-overloaded-operator                         We want to overload operators
+#  llvmlibc-*                                          Super weird clang tidy "must resolve to a function declared within the '__llvm_libc' namespace" warning
+#  *-default-arguments*                                We do use default arguments (and like them)
+#  google-build-using-namespace                        While we discourage its use, in some cases, using namespace makes sense
+#  cppcoreguidelines-pro-type-reinterpret-cast         We use reinterpret_cast
+#  readability-misleading-indentation                  Doesn't like if constexpr
+#  cert-err58-cpp                                      We don't care about uncaught exceptions
+#  llvm-include-order                                  Handled by clang-format
+#  *-uppercase-literal-suffix                          Don't really care if it's 1.0f or 1.0F
+#  cert-dcl16-c                                         (same)
+#  *-magic-numbers                                     Too many false positives
+#  modernize-use-trailing-return-type                  https://clang.llvm.org/extra/clang-tidy/checks/modernize-use-trailing-return-type.html - no that is way too weird
+#  modernize-use-nodiscard                             Don't want to tag everything [[nodiscard]]
+#  cppcoreguidelines-init-variables                    If a variable is only declared and initialized in two different branches, we do not want to initialize it first
+#  concurrency-mt-unsafe                               We use templated non thread-safe function calls in header files
+#  cppcoreguidelines-pro-bounds-pointer-arithmetic     Pointer arithmetic is fine and required for void* array access
+
+
+CheckOptions:
+  - key: readability-identifier-naming.ClassCase
+    value: CamelCase
+
+  - key: readability-identifier-naming.ConstexprVariableCase
+    value: UPPER_CASE
+
+  - key: readability-identifier-naming.EnumCase
+    value: CamelCase
+
+  - key: readability-identifier-naming.EnumConstantCase
+    value: UPPER_CASE
+
+  - key: readability-identifier-naming.FunctionCase
+    value: lower_case
+
+  - key: readability-identifier-naming.GlobalFunctionCase
+    value: lower_case
+
+  - key: readability-identifier-naming.InlineNamespaceCase
+    value: lower_case
+
+  - key: readability-identifier-naming.LocalConstantCase
+    value: lower_case
+
+  - key: readability-identifier-naming.LocalVariableCase
+    value: lower_case
+
+  - key: readability-identifier-naming.MemberCase
+    value: lower_case
+
+  - key: readability-identifier-naming.ClassMemberCase
+    value: UPPER_CASE
+
+  - key: readability-identifier-naming.PrivateMemberSuffix
+    value: '_'
+
+  - key: readability-identifier-naming.ProtectedMemberSuffix
+    value: '_'
+
+  - key: readability-identifier-naming.PublicMemberCase
+    value: lower_case
+
+  - key: readability-identifier-naming.MethodCase
+    value: lower_case
+
+  - key: readability-identifier-naming.NamespaceCase
+    value: lower_case
+
+  - key: readability-identifier-naming.ParameterCase
+    value: lower_case
+
+  - key: readability-identifier-naming.ConstantParameterCase
+    value: lower_case
+
+  - key: readability-identifier-naming.ParameterPackCase
+    value: lower_case
+
+  - key: readability-identifier-naming.StaticConstantCase
+    value: UPPER_CASE
+
+  - key: readability-identifier-naming.StaticVariableCase
+    value: UPPER_CASE
+
+  - key: readability-identifier-naming.StructCase
+    value: CamelCase
+
+# Disable all template-related naming checks, as there seems to be a bug in clang-tidy.
+# Issue: https://github.com/hpides/darwin/issues/47
+#  - key: readability-identifier-naming.TemplateParameterCase
+#    value: CamelCase
+#
+#  - key: readability-identifier-naming.TemplateTemplateParameterCase
+#    value: CamelCase
+#
+#  - key: readability-identifier-naming.TemplateUsingCase
+#    value: lower_case
+#
+#  - key: readability-identifier-naming.TypeTemplateParameterCase
+#    value: CamelCase
+#
+#  - key: readability-identifier-naming.ValueTemplateParameterCase
+#    value: UPPER_CASE
+
+  - key: readability-identifier-naming.TypedefCase
+    value: CamelCase
+
+  - key: readability-identifier-naming.UnionCase
+    value: CamelCase
+
+  - key: readability-identifier-naming.UsingCase
+    value: lower_case
+
+  - key: readability-identifier-naming.VariableCase
+    value: lower_case
+
+  - key: performance-unnecessary-value-param.AllowedTypes
+    value: 'ExpressionPtr'
