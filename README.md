@@ -20,14 +20,16 @@ If you use this code in your work, please cite us.
 
 ```bibtex
 @article{boether_hashmaps_23,
-  author    = {Maximilian Böther and Lawrence Benson and Ana Klimovic and Tilmann Rabl},
-  title     = {Analyzing Vectorized Hash Maps Across CPU Architectures},
-  journal   = {Proceedings of the {VLDB} Endowment},
-  year      = {2023},
+  author = {B\"{o}ther, Maximilian and Benson, Lawrence and Klimovic, Ana and Rabl, Tilmann},
+  title = {Analyzing Vectorized Hash Maps Across CPU Architectures},
+  doi = {10.14778/3611479.3611485},
+  journal = {Proceedings of the {VLDB} Endowment},
+  pages = {2755 - 2768},
+  number = {11},
+  volume = {16},
+  year = {2023},
 }
 ```
-
-(Volume, Issue No, doi are TBD)
 
 ## SIMD Abstraction layer
 
