@@ -49,8 +49,13 @@
 #define BENCHMARK_HASHMAPS BENCHMARK_HASHMAPS_K
 #else
 
+#ifdef HASHMAP_REPR
+#include "benchmark/benchmark_hashmaps_rep.hpp"
+#define BENCHMARK_HASHMAPS BENCHMARK_HASHMAPS_REP
+#else
 #include "benchmark/benchmark_hashmaps_c.hpp"
 #define BENCHMARK_HASHMAPS BENCHMARK_HASHMAPS_C
+#endif
 
 #endif
 
