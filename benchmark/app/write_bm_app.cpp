@@ -40,8 +40,13 @@
 #define BENCHMARK_HASHMAPS BENCHMARK_HASHMAPS_K
 #else
 
+#ifdef HASHMAP_REPR
+#include "benchmark/benchmark_hashmaps_rep.hpp"
+#define BENCHMARK_HASHMAPS BENCHMARK_HASHMAPS_REP
+#else
 #include "benchmark/benchmark_hashmaps_c.hpp"
 #define BENCHMARK_HASHMAPS BENCHMARK_HASHMAPS_C
+#endif
 
 #endif
 #endif
@@ -97,6 +102,12 @@ int main(int argc, char** argv) {
   std::vector<uint8_t> load_factors{25, 50, 70, 90};
   std::vector<uint64_t> hashtable_sizes{gcem::pow<uint64_t, uint64_t>(2, 27)};
   std::vector<uint8_t> thread_counts = parse_thread_counts(argc, argv);
+
+#ifdef HASHMAP_REPR
+  if (thread_counts.size() > 1) {
+    load_factors = {90};
+  }
+#endif
 
 #ifdef HASHMAP_DENSEKEYS
   std::vector<DataDistribution> data_distributions{DataDistribution::DENSE};
