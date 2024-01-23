@@ -241,7 +241,12 @@ int main(int argc, char** argv) {
   uint64_t num_hashmaps = get_num_hashmaps_k();
 
 #else
+#ifdef HASHMAP_REPR
+  spdlog::info("Reproducibliy benchmark.");
+  uint64_t num_hashmaps = get_num_hashmaps_rep();
+#else
   uint64_t num_hashmaps = get_num_hashmaps_c();
+#endif
 #endif
 
 #endif
