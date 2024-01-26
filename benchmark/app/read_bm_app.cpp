@@ -117,7 +117,7 @@ int main(int argc, char** argv) {
   load_factors = {50, 70, 90};
 #endif
 
-  std::vector<uint8_t> successful_query_rates{100, 75, 50, 25, 0};  
+  std::vector<uint8_t> successful_query_rates{100, 75, 50, 25, 0};
   std::vector<uint64_t> hashtable_sizes{gcem::pow<uint64_t, uint64_t>(2, 27)};
   std::vector<uint8_t> thread_counts = parse_thread_counts(argc, argv);
 

@@ -383,11 +383,11 @@ std::string data_type_to_str() {
   }
 
   if constexpr (std::is_same_v<Type, benchmark::DummyTuple*>) {
-    return "ptr_DummyTuple128";
+    return "ptr_DummyTuple";
   }
 
   if constexpr (std::is_same_v<Type, benchmark::DummyTuple>) {
-    return "DummyTuple128";
+    return "DummyTuple";
   }
 
 #ifdef HASHMAP_IS_X86

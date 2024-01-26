@@ -7,7 +7,7 @@ namespace benchmark {
 
 uint64_t get_num_hashmaps_rep() {
 #define BASIC_READ_BENCHMARK_HASHMAPS                                                                                                  \
-      hashmaps::UnalignedLinearProbingAoSHashTable<KeyT, ValueT, DefaultHasher, false, utils::PrefetchingLocality::MEDIUM, true>,       \
+  hashmaps::UnalignedLinearProbingAoSHashTable<KeyT, ValueT, DefaultHasher, false, utils::PrefetchingLocality::MEDIUM, true>,          \
       hashmaps::UnalignedRecalculatingRobinHoodAoSHashTable<KeyT, ValueT, DefaultHasher, false, utils::PrefetchingLocality::NO, true>, \
       hashmaps::LinearProbingPackedSoAHashTable<KeyT, ValueT, DefaultHasher, true>,                                                    \
       hashmaps::ChainedHashTable<KeyT, ValueT, DefaultHasher, true, hashmap::hashmaps::MemoryBudget::KeyValue, 10, true>,              \
@@ -119,79 +119,79 @@ uint64_t get_num_hashmaps_rep() {
 #endif
 
 #ifdef __AVX512F__
-#define FULL_SIMD_READ_BENCHMARK_HASHMAPS                                                                                                          \
-  hashmaps::UnchunkedSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, 128, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON, false, false,       \
-                                      utils::PrefetchingLocality::NO, true>,                                                                       \
-      hashmaps::UnchunkedSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, 256, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON, false, false,   \
-                                          utils::PrefetchingLocality::NO, true>,                                                                   \
-      hashmaps::UnchunkedSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, 512, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON, false, false,   \
-                                          utils::PrefetchingLocality::NO, true>,                                                                   \
-      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint16_t, 128, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON,  \
-                                               false, false, utils::PrefetchingLocality::NO, true, true>,                                          \
-      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint16_t, 128, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON,  \
-                                               false, false, utils::PrefetchingLocality::NO, true, true, hashing::FingerprintBucketBits::MSBLSB>,  \
-      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint16_t, 128, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON,  \
-                                               false, false, utils::PrefetchingLocality::NO, true, true, hashing::FingerprintBucketBits::LSBMSB>,  \
-      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint8_t, 128, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON,   \
-                                               false, false, utils::PrefetchingLocality::NO, true, true>,                                          \
-      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint8_t, 128, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON,   \
-                                               false, false, utils::PrefetchingLocality::NO, true, true, hashing::FingerprintBucketBits::MSBLSB>,  \
-      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint8_t, 128, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON,   \
-                                               false, false, utils::PrefetchingLocality::NO, true, true, hashing::FingerprintBucketBits::LSBMSB>,  \
-      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint16_t, 256, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON,  \
-                                               false, false, utils::PrefetchingLocality::NO, true, true>,                                          \
-      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint16_t, 256, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON,  \
-                                               false, false, utils::PrefetchingLocality::NO, true, true, hashing::FingerprintBucketBits::MSBLSB>,  \
-      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint16_t, 256, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON,  \
-                                               false, false, utils::PrefetchingLocality::NO, true, true, hashing::FingerprintBucketBits::LSBMSB>,  \
-      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint8_t, 256, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON,   \
-                                               false, false, utils::PrefetchingLocality::NO, true, true>,                                          \
-      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint8_t, 256, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON,   \
-                                               false, false, utils::PrefetchingLocality::NO, true, true, hashing::FingerprintBucketBits::MSBLSB>,  \
-      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint8_t, 256, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON,   \
-                                               false, false, utils::PrefetchingLocality::NO, true, true, hashing::FingerprintBucketBits::LSBMSB>,  \
-      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint16_t, 512, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON,  \
-                                               false, false, utils::PrefetchingLocality::NO, true, true>,                                          \
-      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint16_t, 512, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON,  \
-                                               false, false, utils::PrefetchingLocality::NO, true, true, hashing::FingerprintBucketBits::MSBLSB>,  \
-      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint16_t, 512, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON,  \
-                                               false, false, utils::PrefetchingLocality::NO, true, true, hashing::FingerprintBucketBits::LSBMSB>,  \
-      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint8_t, 512, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON,   \
-                                               false, false, utils::PrefetchingLocality::NO, true, true>,                                          \
-      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint8_t, 512, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON,   \
-                                               false, false, utils::PrefetchingLocality::NO, true, true, hashing::FingerprintBucketBits::MSBLSB>,  \
-      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint8_t, 512, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON,   \
-                                               false, false, utils::PrefetchingLocality::NO, true, true, hashing::FingerprintBucketBits::LSBMSB>,  \
-      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint16_t, hashmaps::KeyValueAoSStoringBucket, 8, 128, SIMDAlgorithm::TESTZ,    \
-                                       true, false, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM, true, true>,             \
-      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint16_t, hashmaps::KeyValueAoSStoringBucket, 8, 128, SIMDAlgorithm::TESTZ,    \
-                                       true, false, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM, true, true,              \
-                                       hashing::FingerprintBucketBits::LSBMSB>,                                                                    \
-      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint8_t, hashmaps::KeyValueAoSStoringBucket, 16, 128, SIMDAlgorithm::TESTZ,    \
-                                       true, false, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM, true, true>,             \
-      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint8_t, hashmaps::KeyValueAoSStoringBucket, 16, 128, SIMDAlgorithm::TESTZ,    \
-                                       true, false, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM, true, true,              \
-                                       hashing::FingerprintBucketBits::LSBMSB>,                                                                    \
-      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint16_t, hashmaps::KeyValueAoSStoringBucket, 16, 256, SIMDAlgorithm::TESTZ,   \
-                                       true, false, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM, true, true>,             \
-      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint16_t, hashmaps::KeyValueAoSStoringBucket, 16, 256, SIMDAlgorithm::TESTZ,   \
-                                       true, false, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM, true, true,              \
-                                       hashing::FingerprintBucketBits::LSBMSB>,                                                                    \
-      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint8_t, hashmaps::KeyValueAoSStoringBucket, 32, 256, SIMDAlgorithm::TESTZ,    \
-                                       true, false, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM, true, true>,             \
-      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint8_t, hashmaps::KeyValueAoSStoringBucket, 32, 256, SIMDAlgorithm::TESTZ,    \
-                                       true, false, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM, true, true,              \
-                                       hashing::FingerprintBucketBits::LSBMSB>,                                                                    \
-      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint16_t, hashmaps::KeyValueAoSStoringBucket, 32, 512, SIMDAlgorithm::TESTZ,   \
-                                       true, false, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM, true, true>,             \
-      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint16_t, hashmaps::KeyValueAoSStoringBucket, 32, 512, SIMDAlgorithm::TESTZ,   \
-                                       true, false, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM, true, true,              \
-                                       hashing::FingerprintBucketBits::LSBMSB>,                                                                    \
-      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint8_t, hashmaps::KeyValueAoSStoringBucket, 64, 512, SIMDAlgorithm::TESTZ,    \
-                                       true, false, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM, true, true>,             \
-      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint8_t, hashmaps::KeyValueAoSStoringBucket, 64, 512, SIMDAlgorithm::TESTZ,    \
-                                       true, false, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM, true, true,              \
-                                       hashing::FingerprintBucketBits::LSBMSB>,                                                                    \
+#define FULL_SIMD_READ_BENCHMARK_HASHMAPS                                                                                                         \
+  hashmaps::UnchunkedSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, 128, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON, false, false,      \
+                                      utils::PrefetchingLocality::NO, true>,                                                                      \
+      hashmaps::UnchunkedSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, 256, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON, false, false,  \
+                                          utils::PrefetchingLocality::NO, true>,                                                                  \
+      hashmaps::UnchunkedSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, 512, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON, false, false,  \
+                                          utils::PrefetchingLocality::NO, true>,                                                                  \
+      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint16_t, 128, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON, \
+                                               false, false, utils::PrefetchingLocality::NO, true, true>,                                         \
+      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint16_t, 128, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON, \
+                                               false, false, utils::PrefetchingLocality::NO, true, true, hashing::FingerprintBucketBits::MSBLSB>, \
+      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint16_t, 128, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON, \
+                                               false, false, utils::PrefetchingLocality::NO, true, true, hashing::FingerprintBucketBits::LSBMSB>, \
+      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint8_t, 128, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON,  \
+                                               false, false, utils::PrefetchingLocality::NO, true, true>,                                         \
+      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint8_t, 128, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON,  \
+                                               false, false, utils::PrefetchingLocality::NO, true, true, hashing::FingerprintBucketBits::MSBLSB>, \
+      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint8_t, 128, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON,  \
+                                               false, false, utils::PrefetchingLocality::NO, true, true, hashing::FingerprintBucketBits::LSBMSB>, \
+      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint16_t, 256, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON, \
+                                               false, false, utils::PrefetchingLocality::NO, true, true>,                                         \
+      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint16_t, 256, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON, \
+                                               false, false, utils::PrefetchingLocality::NO, true, true, hashing::FingerprintBucketBits::MSBLSB>, \
+      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint16_t, 256, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON, \
+                                               false, false, utils::PrefetchingLocality::NO, true, true, hashing::FingerprintBucketBits::LSBMSB>, \
+      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint8_t, 256, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON,  \
+                                               false, false, utils::PrefetchingLocality::NO, true, true>,                                         \
+      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint8_t, 256, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON,  \
+                                               false, false, utils::PrefetchingLocality::NO, true, true, hashing::FingerprintBucketBits::MSBLSB>, \
+      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint8_t, 256, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON,  \
+                                               false, false, utils::PrefetchingLocality::NO, true, true, hashing::FingerprintBucketBits::LSBMSB>, \
+      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint16_t, 512, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON, \
+                                               false, false, utils::PrefetchingLocality::NO, true, true>,                                         \
+      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint16_t, 512, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON, \
+                                               false, false, utils::PrefetchingLocality::NO, true, true, hashing::FingerprintBucketBits::MSBLSB>, \
+      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint16_t, 512, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON, \
+                                               false, false, utils::PrefetchingLocality::NO, true, true, hashing::FingerprintBucketBits::LSBMSB>, \
+      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint8_t, 512, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON,  \
+                                               false, false, utils::PrefetchingLocality::NO, true, true>,                                         \
+      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint8_t, 512, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON,  \
+                                               false, false, utils::PrefetchingLocality::NO, true, true, hashing::FingerprintBucketBits::MSBLSB>, \
+      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint8_t, 512, SIMDAlgorithm::TESTZ, true, false, NEONAlgo::SSE2NEON,  \
+                                               false, false, utils::PrefetchingLocality::NO, true, true, hashing::FingerprintBucketBits::LSBMSB>, \
+      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint16_t, hashmaps::KeyValueAoSStoringBucket, 8, 128, SIMDAlgorithm::TESTZ,   \
+                                       true, false, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM, true, true>,            \
+      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint16_t, hashmaps::KeyValueAoSStoringBucket, 8, 128, SIMDAlgorithm::TESTZ,   \
+                                       true, false, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM, true, true,             \
+                                       hashing::FingerprintBucketBits::LSBMSB>,                                                                   \
+      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint8_t, hashmaps::KeyValueAoSStoringBucket, 16, 128, SIMDAlgorithm::TESTZ,   \
+                                       true, false, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM, true, true>,            \
+      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint8_t, hashmaps::KeyValueAoSStoringBucket, 16, 128, SIMDAlgorithm::TESTZ,   \
+                                       true, false, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM, true, true,             \
+                                       hashing::FingerprintBucketBits::LSBMSB>,                                                                   \
+      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint16_t, hashmaps::KeyValueAoSStoringBucket, 16, 256, SIMDAlgorithm::TESTZ,  \
+                                       true, false, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM, true, true>,            \
+      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint16_t, hashmaps::KeyValueAoSStoringBucket, 16, 256, SIMDAlgorithm::TESTZ,  \
+                                       true, false, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM, true, true,             \
+                                       hashing::FingerprintBucketBits::LSBMSB>,                                                                   \
+      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint8_t, hashmaps::KeyValueAoSStoringBucket, 32, 256, SIMDAlgorithm::TESTZ,   \
+                                       true, false, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM, true, true>,            \
+      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint8_t, hashmaps::KeyValueAoSStoringBucket, 32, 256, SIMDAlgorithm::TESTZ,   \
+                                       true, false, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM, true, true,             \
+                                       hashing::FingerprintBucketBits::LSBMSB>,                                                                   \
+      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint16_t, hashmaps::KeyValueAoSStoringBucket, 32, 512, SIMDAlgorithm::TESTZ,  \
+                                       true, false, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM, true, true>,            \
+      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint16_t, hashmaps::KeyValueAoSStoringBucket, 32, 512, SIMDAlgorithm::TESTZ,  \
+                                       true, false, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM, true, true,             \
+                                       hashing::FingerprintBucketBits::LSBMSB>,                                                                   \
+      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint8_t, hashmaps::KeyValueAoSStoringBucket, 64, 512, SIMDAlgorithm::TESTZ,   \
+                                       true, false, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM, true, true>,            \
+      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint8_t, hashmaps::KeyValueAoSStoringBucket, 64, 512, SIMDAlgorithm::TESTZ,   \
+                                       true, false, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM, true, true,             \
+                                       hashing::FingerprintBucketBits::LSBMSB>,                                                                   \
       INTERM_SIMD_READ_BENCHMARK_HASHMAPS
 
   num_hashmaps += 26;
@@ -199,35 +199,35 @@ uint64_t get_num_hashmaps_rep() {
 #else
 
 #if defined(HASHMAP_IS_ARM) && defined(__ARM_FEATURE_SVE)
-#define FULL_SIMD_READ_BENCHMARK_HASHMAPS                                                                                                            \
-  hashmaps::UnchunkedSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, utils::sve_register_size, SIMDAlgorithm::TESTZ, false, true, NEONAlgo::SSE2NEON,  \
-                                      false, false, utils::PrefetchingLocality::NO, true>,                                                           \
-      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint16_t, utils::sve_register_size, SIMDAlgorithm::TESTZ, false, true,   \
-                                               NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::NO, true, true,                         \
-                                               hashing::FingerprintBucketBits::MSBLSB>,                                                              \
-      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint16_t, utils::sve_register_size, SIMDAlgorithm::TESTZ, false, true,   \
-                                               NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::NO, true, true,                         \
-                                               hashing::FingerprintBucketBits::LSBMSB>,                                                              \
-      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint8_t, utils::sve_register_size, SIMDAlgorithm::TESTZ, false, true,    \
-                                               NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::NO, true, true>,                        \
-      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint8_t, utils::sve_register_size, SIMDAlgorithm::TESTZ, false, true,    \
-                                               NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::NO, true, true,                         \
-                                               hashing::FingerprintBucketBits::MSBLSB>,                                                              \
-      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint8_t, utils::sve_register_size, SIMDAlgorithm::TESTZ, false, true,    \
-                                               NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::NO, true, true,                         \
-                                               hashing::FingerprintBucketBits::LSBMSB>,                                                              \
-      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint16_t, hashmaps::KeyValueAoSStoringBucket, 32, utils::sve_register_size,      \
-                                       SIMDAlgorithm::TESTZ, false, true, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM,      \
-                                       true, true>,                                                                                                  \
-      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint8_t, hashmaps::KeyValueAoSStoringBucket, 64, utils::sve_register_size,       \
-                                       SIMDAlgorithm::TESTZ, false, true, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM,      \
-                                       true, true>,                                                                                                  \
-      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint16_t, hashmaps::KeyValueAoSStoringBucket, 32, utils::sve_register_size,      \
-                                       SIMDAlgorithm::TESTZ, false, true, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM,      \
-                                       true, true, hashing::FingerprintBucketBits::LSBMSB>,                                                          \
-      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint8_t, hashmaps::KeyValueAoSStoringBucket, 64, utils::sve_register_size,       \
-                                       SIMDAlgorithm::TESTZ, false, true, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM,      \
-                                       true, true, hashing::FingerprintBucketBits::LSBMSB>,                                                          \
+#define FULL_SIMD_READ_BENCHMARK_HASHMAPS                                                                                                           \
+  hashmaps::UnchunkedSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, utils::sve_register_size, SIMDAlgorithm::TESTZ, false, true, NEONAlgo::SSE2NEON, \
+                                      false, false, utils::PrefetchingLocality::NO, true>,                                                          \
+      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint16_t, utils::sve_register_size, SIMDAlgorithm::TESTZ, false, true,  \
+                                               NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::NO, true, true,                        \
+                                               hashing::FingerprintBucketBits::MSBLSB>,                                                             \
+      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint16_t, utils::sve_register_size, SIMDAlgorithm::TESTZ, false, true,  \
+                                               NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::NO, true, true,                        \
+                                               hashing::FingerprintBucketBits::LSBMSB>,                                                             \
+      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint8_t, utils::sve_register_size, SIMDAlgorithm::TESTZ, false, true,   \
+                                               NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::NO, true, true>,                       \
+      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint8_t, utils::sve_register_size, SIMDAlgorithm::TESTZ, false, true,   \
+                                               NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::NO, true, true,                        \
+                                               hashing::FingerprintBucketBits::MSBLSB>,                                                             \
+      hashmaps::FingerprintingSIMDSoAHashTable<KeyT, ValueT, DefaultHasher, uint8_t, utils::sve_register_size, SIMDAlgorithm::TESTZ, false, true,   \
+                                               NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::NO, true, true,                        \
+                                               hashing::FingerprintBucketBits::LSBMSB>,                                                             \
+      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint16_t, hashmaps::KeyValueAoSStoringBucket, 32, utils::sve_register_size,     \
+                                       SIMDAlgorithm::TESTZ, false, true, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM,     \
+                                       true, true>,                                                                                                 \
+      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint8_t, hashmaps::KeyValueAoSStoringBucket, 64, utils::sve_register_size,      \
+                                       SIMDAlgorithm::TESTZ, false, true, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM,     \
+                                       true, true>,                                                                                                 \
+      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint16_t, hashmaps::KeyValueAoSStoringBucket, 32, utils::sve_register_size,     \
+                                       SIMDAlgorithm::TESTZ, false, true, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM,     \
+                                       true, true, hashing::FingerprintBucketBits::LSBMSB>,                                                         \
+      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint8_t, hashmaps::KeyValueAoSStoringBucket, 64, utils::sve_register_size,      \
+                                       SIMDAlgorithm::TESTZ, false, true, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM,     \
+                                       true, true, hashing::FingerprintBucketBits::LSBMSB>,                                                         \
       INTERM_SIMD_READ_BENCHMARK_HASHMAPS
 
   num_hashmaps += 10;
