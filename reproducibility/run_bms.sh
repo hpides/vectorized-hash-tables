@@ -36,20 +36,34 @@ cd build_uniform
 mkdir data
 cmake .. -DCMAKE_BUILD_TYPE=Release -DHASHMAP_REPR=1
 make -j8 hashmap-read-benchmark hashmap-write-benchmark
-./hashmap-read-benchmark generate
-./hashmap-write-benchmark generate
-eval $NUMAPREF ./hashmap-read-benchmark
-eval $NUMAPREF ./hashmap-write-benchmark
 
-rm -rf data
 mkdir data
-
 ./hashmap-read-benchmark generate 8 16 32 64
 ./hashmap-write-benchmark generate 8 16 32 64
 ./hashmap-read-benchmark 8 16 32 64
 ./hashmap-write-benchmark 8 16 32 64
 rm -rf data
+mkdir data
+
+./hashmap-read-benchmark generate
+./hashmap-write-benchmark generate
+eval $NUMAPREF ./hashmap-read-benchmark
+eval $NUMAPREF ./hashmap-write-benchmark
 cd ..
+
+mkdir build_smallpointervals
+cd build_smallpointervals
+ln -s ../build_uniform/data data
+cmake .. -DCMAKE_BUILD_TYPE=Release -DHASHMAP_POINTERVALUES=1
+make -j8 hashmap-read-benchmark hashmap-write-benchmark
+./hashmap-read-benchmark generate
+./hashmap-write-benchmark generate
+eval $NUMAPREF ./hashmap-read-benchmark
+eval $NUMAPREF ./hashmap-write-benchmark
+rm -rf data
+rm -rf ../build_uniform/data
+cd ..
+
 
 mkdir build_strings
 cd build_strings
@@ -72,20 +86,8 @@ make -j8 hashmap-read-benchmark hashmap-write-benchmark
 ./hashmap-write-benchmark generate
 eval $NUMAPREF ./hashmap-read-benchmark
 eval $NUMAPREF ./hashmap-write-benchmark
-rm -rf data
 cd ..
 
-mkdir build_smallpointervals
-cd build_smallpointervals
-ln -s ../build_uniform/data data
-cmake .. -DCMAKE_BUILD_TYPE=Release -DHASHMAP_POINTERVALUES=1
-make -j8 hashmap-read-benchmark hashmap-write-benchmark
-./hashmap-read-benchmark generate
-./hashmap-write-benchmark generate
-eval $NUMAPREF ./hashmap-read-benchmark
-eval $NUMAPREF ./hashmap-write-benchmark
-rm -rf data
-cd ..
 
 mkdir build_largepointervals
 cd build_largepointervals
@@ -97,6 +99,7 @@ make -j8 hashmap-read-benchmark hashmap-write-benchmark
 eval $NUMAPREF ./hashmap-read-benchmark
 eval $NUMAPREF ./hashmap-write-benchmark
 rm -rf data
+rm -rf ../build_largevals/data
 cd ..
 
 if [[ "$vendor" == "GenuineIntel" ]]; then
