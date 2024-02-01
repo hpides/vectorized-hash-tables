@@ -8,12 +8,13 @@ namespace benchmark {
 uint64_t get_num_hashmaps_rep() {
 #define BASIC_READ_BENCHMARK_HASHMAPS                                                                                                  \
   hashmaps::UnalignedLinearProbingAoSHashTable<KeyT, ValueT, DefaultHasher, false, utils::PrefetchingLocality::MEDIUM, true>,          \
+      hashmaps::UnalignedLinearProbingAoSHashTable<KeyT, ValueT, xxHasher, false, utils::PrefetchingLocality::MEDIUM, true>,           \
       hashmaps::UnalignedRecalculatingRobinHoodAoSHashTable<KeyT, ValueT, DefaultHasher, false, utils::PrefetchingLocality::NO, true>, \
       hashmaps::LinearProbingPackedSoAHashTable<KeyT, ValueT, DefaultHasher, true>,                                                    \
       hashmaps::ChainedHashTable<KeyT, ValueT, DefaultHasher, true, hashmap::hashmaps::MemoryBudget::KeyValue, 10, true>,              \
       hashmaps::ChainedHashTable<KeyT, ValueT, DefaultHasher, true, hashmap::hashmaps::MemoryBudget::Bucket16FP, 10, true>
 
-  uint64_t num_hashmaps = 5;
+  uint64_t num_hashmaps = 6;
 
 #define EXTERNAL_READ_BENCHMARK_HASHMAPS BASIC_READ_BENCHMARK_HASHMAPS
 
@@ -43,9 +44,11 @@ uint64_t get_num_hashmaps_rep() {
                                        false, false, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM, true, true>,              \
       hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint8_t, hashmaps::KeyValueAoSStoringBucket, 16, 128, SIMDAlgorithm::TESTZ,      \
                                        false, false, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM, true, true,               \
-                                       hashing::FingerprintBucketBits::LSBMSB>
+                                       hashing::FingerprintBucketBits::LSBMSB>,                                                                      \
+      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, xxHasher, uint8_t, hashmaps::KeyValueAoSStoringBucket, 16, 128, SIMDAlgorithm::TESTZ, false,    \
+                                       false, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM, true, true>
 
-  num_hashmaps += 12;
+  num_hashmaps += 13;
 
 #ifdef __AVX2__
 #define INTERM_SIMD_READ_BENCHMARK_HASHMAPS                                                                                                        \
@@ -83,6 +86,8 @@ uint64_t get_num_hashmaps_rep() {
       hashmaps::BucketingSIMDHashTable<KeyT, ValueT, DefaultHasher, uint8_t, hashmaps::KeyValueAoSStoringBucket, 32, 256, SIMDAlgorithm::TESTZ,    \
                                        false, false, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM, true, true,             \
                                        hashing::FingerprintBucketBits::LSBMSB>,                                                                    \
+      hashmaps::BucketingSIMDHashTable<KeyT, ValueT, xxHasher, uint8_t, hashmaps::KeyValueAoSStoringBucket, 32, 256, SIMDAlgorithm::TESTZ, false,  \
+                                       false, NEONAlgo::SSE2NEON, false, false, utils::PrefetchingLocality::MEDIUM, true, true>,                   \
       BASIC_SIMD_READ_BENCHMARK_HASHMAPS
 
   num_hashmaps += 15;

@@ -133,9 +133,9 @@ def load_read_benchmark_data(use_mean_aggregation = True):  # if false, median i
     group_attributes = ["Arch", "Hashmap", "Compiler", "PageSize", "HugePageSize", "LoadFactor", "SQR", "Size", "Distribution", "Workload", "KeySize", "ValueSize", "EntrySize", "EntriesProcessed", "Zipf", "ThreadCount"]
 
     if use_mean_aggregation:
-        merged_results = merged_results.groupby(group_attributes).mean().reset_index()
+        merged_results = merged_results.groupby(group_attributes).mean(numeric_only=True).reset_index()
     else:
-        merged_results = merged_results.groupby(group_attributes).median().reset_index()
+        merged_results = merged_results.groupby(group_attributes).median(numeric_only=True).reset_index()
 
     # calculate mt speedup
     def get_st_lookups(row, df1):
@@ -200,9 +200,9 @@ def load_write_benchmark_data(use_mean_aggregation = True):  # if false, median 
     group_attributes = ["Arch", "Hashmap", "Compiler", "PageSize", "HugePageSize", "LoadFactor", "Size", "Distribution", "KeySize", "ValueSize", "EntrySize", "EntriesProcessed", "ThreadCount"]
 
     if use_mean_aggregation:
-        merged_results = merged_results.groupby(group_attributes).mean().reset_index()
+        merged_results = merged_results.groupby(group_attributes).mean(numeric_only=True).reset_index()
     else:
-        merged_results = merged_results.groupby(group_attributes).median().reset_index()
+        merged_results = merged_results.groupby(group_attributes).median(numeric_only=True).reset_index()
 
     # calculate mt speedup
     def get_st_lookups(row, df1):
@@ -1189,7 +1189,7 @@ def analysis_plot(hashmap_filter, palette_dict, ARCHITECTURES, LOAD_FACTORS, wid
     legend = fig.legend(handles, transformed_labels, frameon=not disable_legend_border, loc='lower center', handlelength=LEGEND_HANDLELENGTH + extra_legend_handlelength, columnspacing=LEGEND_COLUMNSPACING + extra_legend_columnspacing, handletextpad=LEGEND_HANDLETEXTPAD, ncol = ncol_legend, bbox_to_anchor = bbox, bbox_transform = fig.transFigure, fontsize=legend_fontsize, title_fontsize=legend_fontsize, markerscale=0.5)
     
     # set the linewidth of each legend object
-    for legobj in legend.legendHandles:
+    for legobj in legend.legend_handles:
         legobj.set_linewidth(DATA_LINEWIDTH)
         legobj.set_markersize(MARKER_SIZE)
         legobj.set_markeredgewidth(MARKER_EDGEWIDTH)
@@ -1202,10 +1202,8 @@ def analysis_plot(hashmap_filter, palette_dict, ARCHITECTURES, LOAD_FACTORS, wid
             plt.savefig(file_path, bbox_inches='tight')
 
   
-    plt.show()
     
     return return_read_data2, return_write_data2
-
 
 ### FIGURE 1 ###
 
@@ -1383,6 +1381,7 @@ _ = analysis_plot("BucketingSIMDHashTable", pal_dict, ["Intel x86"], [50, 70, 90
                    hide_zipf=False, hide_non_zipf=True, hide_insertions=True, label_order=[2,1,0],
                  extra_legend_columnspacing=0.5, extra_legend_handlelength=1,)
 
+
 ### FIGURE 12 ###
 
 pal_dict = {"BucketSIMD_16B_THP": "#e31a1c", 'BucketSIMD_8B_THP': "#fd8d3c",
@@ -1403,4 +1402,4 @@ _ = analysis_plot("BucketingSIMDHashTable", pal_dict, ["Intel x86", "AMD x86", "
                    legend_height_shift=-0.045, ylabel_padding=0, xlabel_padding=0,
                    disable_legend_border=True, reduce_xticks=True, reduce_yticks=True, reduce_minor=True,
                    analyze_threadcount=True,  force_write_lf=90, force_sqr=50, hide_insertions=False, arch_ylimits={"Power": 500},
-                   markevery=[0,3,4,5,6], extra_legend_columnspacing=0.3, extra_legend_handlelength=0.7)
+                    extra_legend_columnspacing=0.3, extra_legend_handlelength=0.7)
