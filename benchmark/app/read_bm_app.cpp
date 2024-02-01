@@ -127,8 +127,6 @@ int main(int argc, char** argv) {
   if (thread_counts.size() > 1) {
     successful_query_rates = {50};
   }
-  using xxHasher = hashmap::hashing::XXHasher<KeyT, false>;
-
 #endif
 
 #ifdef HASHMAP_ZIPF
@@ -195,6 +193,10 @@ int main(int argc, char** argv) {
   using MurmurHasher = hashmap::hashing::MurmurHasher<KeyT, false>;
   using xxHasher = hashmap::hashing::XXHasher<KeyT, false>;
 
+#endif
+
+#ifdef HASHMAP_REPR
+  using xxHasher = hashmap::hashing::XXHasher<KeyT, false>;
 #endif
 
 #ifdef HASHMAP_DENSEKEYS
