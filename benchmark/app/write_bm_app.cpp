@@ -107,6 +107,7 @@ int main(int argc, char** argv) {
   if (thread_counts.size() > 1) {
     load_factors = {90};
   }
+  using xxHasher = hashmap::hashing::XXHasher<KeyT, false>;
 #endif
 
 #ifdef HASHMAP_DENSEKEYS
