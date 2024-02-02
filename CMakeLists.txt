@@ -98,12 +98,6 @@ if (${HASHMAP_ZIPF})
     add_compile_definitions(HASHMAP_ZIPF=1)
 endif()
 
-option(HASHMAP_REPR "Set ON if you want to run the reproducibility benchmarks" OFF)
-if (${HASHMAP_REPR})
-    message(STATUS "Running REPR BMs.")
-    add_compile_definitions(HASHMAP_REPR=1)
-endif()
-
 
 #### INTERNAL OPTIONS ####
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
