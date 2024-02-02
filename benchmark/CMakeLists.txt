@@ -15,6 +15,7 @@ set(BENCHMARK_HEADERS
         ../benchmark-include/benchmark/benchmark_hashmaps_g.hpp
         ../benchmark-include/benchmark/benchmark_hashmaps_h.hpp
         ../benchmark-include/benchmark/benchmark_hashmaps_i.hpp
+        ../benchmark-include/benchmark/benchmark_hashmaps_rep.hpp
         ../benchmark-include/benchmark/benchmark_shared.hpp
         ../benchmark-include/benchmark/benchmark_utils.hpp
         ../benchmark-include/benchmark/perf_monitor.hpp

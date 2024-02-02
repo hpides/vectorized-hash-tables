@@ -56,21 +56,6 @@ struct DummyTuple {
   uint64_t value3 = 0;
   uint64_t value4 = 0;
 
-  uint64_t value5 = 0;
-  uint64_t value6 = 0;
-  uint64_t value7 = 0;
-  uint64_t value8 = 0;
-
-  uint64_t value9 = 0;
-  uint64_t value10 = 0;
-  uint64_t value11 = 0;
-  uint64_t value12 = 0;
-
-  uint64_t value13 = 0;
-  uint64_t value14 = 0;
-  uint64_t value15 = 0;
-  uint64_t value16 = 0;
-
   operator uint64_t() const;  // NOLINT: we want this to be implicit!
 };
 
@@ -292,18 +277,6 @@ typename std::remove_pointer<ValueT>::type generate_random_value() {
     t.value2 = value_dis(reproducible_gen());
     t.value3 = value_dis(reproducible_gen());
     t.value4 = value_dis(reproducible_gen());
-    t.value5 = value_dis(reproducible_gen());
-    t.value6 = value_dis(reproducible_gen());
-    t.value7 = value_dis(reproducible_gen());
-    t.value8 = value_dis(reproducible_gen());
-    t.value9 = value_dis(reproducible_gen());
-    t.value10 = value_dis(reproducible_gen());
-    t.value11 = value_dis(reproducible_gen());
-    t.value12 = value_dis(reproducible_gen());
-    t.value13 = value_dis(reproducible_gen());
-    t.value14 = value_dis(reproducible_gen());
-    t.value15 = value_dis(reproducible_gen());
-    t.value16 = value_dis(reproducible_gen());
 
     return t;
 

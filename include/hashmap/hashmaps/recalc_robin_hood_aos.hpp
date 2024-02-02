@@ -200,7 +200,8 @@ class RecalculatingRobinHoodAoSHashTable
   };
 
  protected:
-  alignas(utils::cacheline_size) static constexpr uint64_t reprobe_interval = std::max(static_cast<uint64_t>(1), static_cast<uint64_t>(utils::cacheline_size / sizeof(EntryT)));
+  alignas(utils::cacheline_size) static constexpr uint64_t reprobe_interval = std::max(static_cast<uint64_t>(1),
+                                                                                       static_cast<uint64_t>(utils::cacheline_size / sizeof(EntryT)));
 };
 
 // Alignment of AoSEntry is done by compiler, i.e., it is aligned to the largest member

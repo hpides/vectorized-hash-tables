@@ -49,8 +49,13 @@
 #define BENCHMARK_HASHMAPS BENCHMARK_HASHMAPS_K
 #else
 
+#ifdef HASHMAP_REPR
+#include "benchmark/benchmark_hashmaps_rep.hpp"
+#define BENCHMARK_HASHMAPS BENCHMARK_HASHMAPS_REP
+#else
 #include "benchmark/benchmark_hashmaps_c.hpp"
 #define BENCHMARK_HASHMAPS BENCHMARK_HASHMAPS_C
+#endif
 
 #endif
 
@@ -107,12 +112,22 @@ int main(int argc, char** argv) {
   std::optional<std::string> benchmark_data_dir = fmt::format("{}/data", utils::getexepath().string());
   // std::optional<std::string> benchmark_data_dir = fmt::format("/Users/mboether/phd/hashmaps/ma-code/build-debug/data");
 
-  std::vector<uint8_t> load_factors{25, 50, 70, 90};                //
-  std::vector<uint8_t> successful_query_rates{100, 75, 50, 25, 0};  //   0
+  std::vector<uint8_t> load_factors{50, 90};
+#ifdef HASHMAP_ZIPF
+  load_factors = {50, 70, 90};
+#endif
+
+  std::vector<uint8_t> successful_query_rates{100, 75, 50, 25, 0};
   std::vector<uint64_t> hashtable_sizes{gcem::pow<uint64_t, uint64_t>(2, 27)};
   std::vector<uint8_t> thread_counts = parse_thread_counts(argc, argv);
 
   std::vector<uint32_t> workloads{utils::default_workload};  // 256 on ARM, 1024 on x86/Power - in MB
+
+#ifdef HASHMAP_REPR
+  if (thread_counts.size() > 1) {
+    successful_query_rates = {50};
+  }
+#endif
 
 #ifdef HASHMAP_ZIPF
   bool zipf_requests = true;
@@ -180,6 +195,10 @@ int main(int argc, char** argv) {
 
 #endif
 
+#ifdef HASHMAP_REPR
+  using xxHasher = hashmap::hashing::XXHasher<KeyT, false>;
+#endif
+
 #ifdef HASHMAP_DENSEKEYS
   using MultShift64Hasher = hashmap::hashing::MultShift64BHasher<KeyT, false>;
 #endif
@@ -226,7 +245,12 @@ int main(int argc, char** argv) {
   uint64_t num_hashmaps = get_num_hashmaps_k();
 
 #else
+#ifdef HASHMAP_REPR
+  spdlog::info("Reproducibliy benchmark.");
+  uint64_t num_hashmaps = get_num_hashmaps_rep();
+#else
   uint64_t num_hashmaps = get_num_hashmaps_c();
+#endif
 #endif
 
 #endif

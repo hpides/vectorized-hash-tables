@@ -4,7 +4,7 @@
 
 namespace benchmark {
 
-DummyTuple::operator uint64_t() const { return value1 + value2 + value4 + value7 + value8 + value10 + value12 + value14 + value16; }
+DummyTuple::operator uint64_t() const { return value1 + value2 + value4; }
 
 // The configuration of the benchmark suite is all really messy and the entire configuration via DEFINES/command line/recompiling should be
 // refactored.
